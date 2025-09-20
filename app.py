@@ -14,10 +14,10 @@ st.set_page_config(
 @st.cache_data
 def load_data():
     """Load and cache the Big Mart dataset"""
-    # Construct path to the CSV file relative to the script
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    file_path = os.path.join(script_dir, 'Big_Mart.csv')
-    df = pd.read_csv(file_path)
+    # Use absolute path to ensure file is found in cloud environment
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    csv_path = os.path.join(script_dir, 'Big_Mart.csv')
+    df = pd.read_csv(csv_path)
     
     # Rename columns to match expected names in requirements
     column_mapping = {
@@ -142,7 +142,7 @@ for col in ['Item_Weight', 'Outlet_Size']:
     })
 
 missing_df = pd.DataFrame(missing_data)
-st.dataframe(missing_df, use_container_width=True)
+st.dataframe(missing_df, width="stretch")
 
 # Data Visualization Section
 st.header("📈 Visualizations")
@@ -165,7 +165,7 @@ else:
             labels={'Item_MRP': 'Item MRP ($)', 'Item_Outlet_Sales': 'Item Outlet Sales ($)'},
             color_discrete_sequence=px.colors.qualitative.Set2
         )
-        st.plotly_chart(fig_scatter, use_container_width=True)
+        st.plotly_chart(fig_scatter, width="stretch")
         
         # Store Size Distribution (handling null values)
         st.subheader("Store Size Distribution")
@@ -178,7 +178,7 @@ else:
                 names=size_counts.index,
                 title="Distribution of Outlet Sizes"
             )
-            st.plotly_chart(fig_pie_size, use_container_width=True)
+            st.plotly_chart(fig_pie_size, width="stretch")
         else:
             st.info("No data available for this visualization")
         
@@ -194,7 +194,7 @@ else:
                 color=tier_counts.index,
                 color_discrete_sequence=px.colors.qualitative.Pastel1
             )
-            st.plotly_chart(fig_bar_tier, use_container_width=True)
+            st.plotly_chart(fig_bar_tier, width="stretch")
         else:
             st.info("No data available for this visualization")
         
@@ -211,7 +211,7 @@ else:
                 color='Outlet_Type',
                 color_discrete_sequence=px.colors.qualitative.Set3
             )
-            st.plotly_chart(fig_bar_avg, use_container_width=True)
+            st.plotly_chart(fig_bar_avg, width="stretch")
         else:
             st.info("No data available for this visualization")
 
@@ -225,7 +225,7 @@ else:
             labels={'Item_Outlet_Sales': 'Item Outlet Sales ($)', 'count': 'Frequency'},
             nbins=50
         )
-        st.plotly_chart(fig_hist_sales, use_container_width=True)
+        st.plotly_chart(fig_hist_sales, width="stretch")
         
         # Product Visibility Distribution
         st.subheader("Product Visibility Distribution")
@@ -236,7 +236,7 @@ else:
             labels={'Item_Visibility': 'Item Visibility', 'count': 'Frequency'},
             nbins=50
         )
-        st.plotly_chart(fig_hist_visibility, use_container_width=True)
+        st.plotly_chart(fig_hist_visibility, width="stretch")
         
         # Total Sales by Fat Content
         st.subheader("Total Sales by Fat Content")
@@ -259,7 +259,7 @@ else:
                 color='Item_Fat_Content',
                 color_discrete_sequence=px.colors.qualitative.Bold
             )
-            st.plotly_chart(fig_bar_fat, use_container_width=True)
+            st.plotly_chart(fig_bar_fat, width="stretch")
         else:
             st.info("No data available for this visualization")
         
@@ -276,7 +276,7 @@ else:
                 color='Outlet_Location_Type',
                 color_discrete_sequence=px.colors.qualitative.Vivid
             )
-            st.plotly_chart(fig_bar_tier_sales, use_container_width=True)
+            st.plotly_chart(fig_bar_tier_sales, width="stretch")
         else:
             st.info("No data available for this visualization")
 
@@ -298,7 +298,7 @@ else:
         )
         # Rotate x-axis labels for better readability
         fig_bar_product_total.update_layout(xaxis_tickangle=-45)
-        st.plotly_chart(fig_bar_product_total, use_container_width=True)
+        st.plotly_chart(fig_bar_product_total, width="stretch")
     else:
         st.info("No data available for this visualization")
 
@@ -311,7 +311,7 @@ else:
             names=type_sales['Item_Type'].values,
             title="Percentage of Total Sales by Product Type"
         )
-        st.plotly_chart(fig_pie_type, use_container_width=True)
+        st.plotly_chart(fig_pie_type, width="stretch")
     else:
         st.info("No data available for this visualization")
 
@@ -340,7 +340,7 @@ if len(data) > 0:
             markers=True
         )
         fig_line_age.update_traces(line=dict(color='#1f77b4', width=3))
-        st.plotly_chart(fig_line_age, use_container_width=True)
+        st.plotly_chart(fig_line_age, width="stretch")
         
     with adv_col2:
         # Box Plot for Sales Distribution by Outlet Type
@@ -355,7 +355,7 @@ if len(data) > 0:
             color_discrete_sequence=px.colors.qualitative.Pastel2
         )
         fig_box.update_layout(xaxis_tickangle=-30)
-        st.plotly_chart(fig_box, use_container_width=True)
+        st.plotly_chart(fig_box, width="stretch")
     
     # Full-width advanced visualization
     st.subheader("Product Performance Matrix")
@@ -386,7 +386,7 @@ if len(data) > 0:
         color_continuous_scale='plasma',
         size_max=50
     )
-    st.plotly_chart(fig_bubble, use_container_width=True)
+    st.plotly_chart(fig_bubble, width="stretch")
 
 else:
     st.warning("⚠️ No data available for advanced analytics.")
