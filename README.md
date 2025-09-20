@@ -48,14 +48,6 @@ A comprehensive Streamlit dashboard for analyzing Big Mart outlet sales data wit
 **Store Category Filter**: Analyze by store types (Grocery, Supermarket Types)
 - Real-time data filtering across all visualizations
 
-### 💡 Business Insights
-**Key Findings**
-- Fruits, Vegetables, and Snack Foods performance insights
-- Low Fat vs Regular product sales analysis
-- MRP influence on sales patterns
-- Store type performance benchmarking
-- Product visibility impact assessment
-
 ### 🔬 Model Performance
 **OLS Regression Model Summary**
 - R-squared: 0.553
@@ -95,18 +87,8 @@ Big_Mart_Sales/
 ```
 
 ## 📊 Dataset
-The dashboard uses Big Mart sales data with the following columns:
-
-**Product Information**
-- Item_Identifier, Item_Weight, Item_Fat_Content
-- Item_Visibility, Item_Type, Item_MRP
-
-**Outlet Information**
-- Outlet_Identifier, Outlet_Establishment_Year
-- Outlet_Size, Outlet_Location_Type, Outlet_Type
-
-**Sales Data**
-- Item_Outlet_Sales (Target Variable)
+Dataset is from Kaggle:
+https://www.kaggle.com/datasets/akashdeepkuila/big-mart-sales
 
 ## 🎨 Design Features
 - **Modern UI**: Clean, professional design with vibrant colors
@@ -138,6 +120,3 @@ The dashboard uses Big Mart sales data with the following columns:
 - **Price Sensitivity**: Strong correlation between MRP and sales performance
 - **Store Hierarchy**: Supermarket Type 3 leads in average sales performance
 - **Visibility Factor**: Limited correlation between product visibility and sales
-
----
-*Dashboard created for comprehensive Big Mart sales analysis and business intelligence.*
