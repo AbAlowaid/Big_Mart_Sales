@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import numpy as np
+import os
 
 # Page configuration
 st.set_page_config(
@@ -13,7 +14,10 @@ st.set_page_config(
 @st.cache_data
 def load_data():
     """Load and cache the Big Mart dataset"""
-    df = pd.read_csv('Big_Mart.csv')
+    # Construct path to the CSV file relative to the script
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    file_path = os.path.join(script_dir, 'Big_Mart.csv')
+    df = pd.read_csv(file_path)
     
     # Rename columns to match expected names in requirements
     column_mapping = {
