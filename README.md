@@ -120,3 +120,6 @@ https://www.kaggle.com/datasets/akashdeepkuila/big-mart-sales
 - **Price Sensitivity**: Strong correlation between MRP and sales performance
 - **Store Hierarchy**: Supermarket Type 3 leads in average sales performance
 - **Visibility Factor**: Limited correlation between product visibility and sales
+
+## 💻 Streamlit Dashboard
+https://bigmartsalesdashboard.streamlit.app/
