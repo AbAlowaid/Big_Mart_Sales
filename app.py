@@ -14,12 +14,10 @@ st.set_page_config(
 @st.cache_data
 def load_data():
     """Load and cache the Big Mart dataset"""
-    # Use absolute path to ensure file is found in cloud environment
     script_dir = os.path.dirname(os.path.abspath(__file__))
     csv_path = os.path.join(script_dir, 'Big_Mart.csv')
     df = pd.read_csv(csv_path)
     
-    # Rename columns to match expected names in requirements
     column_mapping = {
         'ProductID': 'Item_Identifier',
         'Weight': 'Item_Weight',
@@ -150,7 +148,6 @@ st.header("📈 Visualizations")
 if len(data) == 0:
     st.warning("⚠️ No data available for the selected filters. Please adjust your filter selection.")
 else:
-    # Create two columns for better layout
     vis_col1, vis_col2 = st.columns(2)
 
     with vis_col1:
@@ -167,7 +164,7 @@ else:
         )
         st.plotly_chart(fig_scatter, width="stretch")
         
-        # Store Size Distribution (handling null values)
+        # Store Size Distribution
         st.subheader("Store Size Distribution")
         df_size = data.copy()
         df_size['Outlet_Size'] = df_size['Outlet_Size'].fillna('Unknown')
@@ -284,7 +281,6 @@ else:
     st.subheader("Total Sales by Product Type")
     type_sales_total = data.groupby('Item_Type')['Item_Outlet_Sales'].sum().reset_index()
     if len(type_sales_total) > 0:
-        # Sort by sales amount for better visualization
         type_sales_total = type_sales_total.sort_values('Item_Outlet_Sales', ascending=False)
         
         fig_bar_product_total = px.bar(
@@ -296,13 +292,12 @@ else:
             color='Item_Type',
             color_discrete_sequence=px.colors.qualitative.Dark24
         )
-        # Rotate x-axis labels for better readability
         fig_bar_product_total.update_layout(xaxis_tickangle=-45)
         st.plotly_chart(fig_bar_product_total, width="stretch")
     else:
         st.info("No data available for this visualization")
 
-    # Sales by Product Type (%) - Full width
+    # Sales by Product Type (%)
     st.subheader("Sales by Product Type (%)")
     type_sales = data.groupby('Item_Type')['Item_Outlet_Sales'].sum().reset_index()
     if len(type_sales) > 0:
@@ -315,17 +310,16 @@ else:
     else:
         st.info("No data available for this visualization")
 
-# Additional Business Intelligence Visualizations
+# Advanced Analytics Section
 st.header("🔍 Advanced Analytics")
 
 if len(data) > 0:
-    # Create columns for advanced analytics
     adv_col1, adv_col2 = st.columns(2)
     
     with adv_col1:
-        # Sales Performance by Store Age (Line Chart)
+        # Sales Performance by Store Age
         st.subheader("Sales Trends by Store Age")
-        current_year = 2025  # Based on context date
+        current_year = 2025 
         store_age_df = data.copy()
         store_age_df['Store_Age'] = current_year - store_age_df['Outlet_Establishment_Year']
         age_sales = store_age_df.groupby('Store_Age')['Item_Outlet_Sales'].mean().reset_index()
@@ -343,7 +337,7 @@ if len(data) > 0:
         st.plotly_chart(fig_line_age, width="stretch")
         
     with adv_col2:
-        # Box Plot for Sales Distribution by Outlet Type
+        # Sales Distribution by Outlet Type
         st.subheader("Sales Distribution by Store Type")
         fig_box = px.box(
             data,
@@ -357,10 +351,7 @@ if len(data) > 0:
         fig_box.update_layout(xaxis_tickangle=-30)
         st.plotly_chart(fig_box, width="stretch")
     
-    # Full-width advanced visualization
     st.subheader("Product Performance Matrix")
-    # Bubble chart showing relationship between MRP, Visibility, and Sales
-    # Calculate average values by product type for cleaner visualization
     bubble_data = data.groupby('Item_Type').agg({
         'Item_MRP': 'mean',
         'Item_Visibility': 'mean', 
@@ -432,7 +423,7 @@ with metric_col2:
 with metric_col3:
     st.metric("F-statistic", "424.8")
 
-# Full model details in expander
+# Full model details
 with st.expander("Click to see full model details"):
     st.text("""
 ==============================================================================
@@ -448,6 +439,5 @@ Covariance Type:            nonrobust
 ==============================================================================
     """)
 
-# Footer
 st.markdown("---")
 st.markdown("*The Dashboard Was Created By One Of The Sons Of The Historic Sudair Region*")
